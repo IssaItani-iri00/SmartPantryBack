@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class HouseHold extends Model {
+    protected $table = 'households';
+    
     protected $fillable = [
         'name',
         'invite_code',
@@ -23,7 +25,7 @@ class HouseHold extends Model {
     }
 
     function users() {
-        return $this->belongsToMany(User::class)
+        return $this->belongsToMany(User::class, 'household_user', 'household_id', 'user_id')
                     ->withTimestamps();
     }
 

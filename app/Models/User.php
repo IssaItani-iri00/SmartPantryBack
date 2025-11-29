@@ -45,7 +45,7 @@ class User extends Authenticatable implements JWTSubject {
     }
 
     function households() {
-        return $this->belongsToMany(HouseHold::class)
+        return $this->belongsToMany(HouseHold::class, 'household_user', 'user_id', 'household_id')
                     ->withTimestamps();
     }
 
