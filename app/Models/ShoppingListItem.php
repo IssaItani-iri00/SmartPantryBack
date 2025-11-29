@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShoppingListItem extends Model
-{
+class ShoppingListItem extends Model {
     protected $fillable = [
         'shopping_list_id',
         'ingredient_id',
@@ -15,14 +14,12 @@ class ShoppingListItem extends Model
         'is_checked',
         'notes',
     ];
-    
-    function shoppingList()
-    {
+
+    function shoppingList() {
         return $this->belongsTo(ShoppingList::class);
     }
 
-    function ingredient()
-    {
+    function ingredient() {
         return $this->belongsTo(Ingredient::class);
     }
 }

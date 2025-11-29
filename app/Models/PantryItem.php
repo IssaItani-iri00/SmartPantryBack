@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PantryItem extends Model
-{
+class PantryItem extends Model {
     protected $fillable = [
         'user_id',
         'ingredients_id',
@@ -16,13 +15,11 @@ class PantryItem extends Model
         'notes',
     ];
 
-    function household()
-    {
+    function household() {
         return $this->belongsTo(HouseHold::class);
     }
 
-    function ingredient()
-    {
+    function ingredient() {
         return $this->belongsTo(Ingredient::class, 'ingredients_id');
     }
 }

@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class HouseHold extends Model
-{
+class HouseHold extends Model {
     protected $fillable = [
         'name',
         'invite_code',
     ];
 
-    protected static function boot()
-    {
+    protected static function boot() {
         parent::boot();
 
         static::creating(function ($household) {
@@ -24,29 +22,24 @@ class HouseHold extends Model
         });
     }
 
-    function users()
-    {
+    function users() {
         return $this->belongsToMany(User::class)
                     ->withTimestamps();
     }
 
-    function pantryItems()
-    {
+    function pantryItems() {
         return $this->hasMany(Recipe::class);
     }
 
-    function meanlPlans()
-    {
+    function meanlPlans() {
         return $this->hasMany(MealPlan::class);
     }
 
-    function shoppingLists()
-    {
+    function shoppingLists() {
         return $this->hasMany(ShoppingList::class);
     }
 
-    function expenses()
-    {
+    function expenses() {
         return $this->hasMany(Expense::class);
     }
 }

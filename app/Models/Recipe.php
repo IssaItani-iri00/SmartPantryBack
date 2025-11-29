@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
-class Recipe extends Model
-{
+class Recipe extends Model {
     protected $fillable = [
         'household_id',
         'user_id',
@@ -22,25 +21,21 @@ class Recipe extends Model
         'tags' => 'array',
     ];
 
-    function household()
-    {
+    function household() {
         return $this->belongsTo(HouseHold::class);
     }
 
-    function user()
-    {
+    function user() {
         return $this->belongsTo(User::class);
     }
 
-    function ingredients()
-    {
+    function ingredients() {
         return $this->belongsToMany(Ingredient::class, 'recipe_ingredients')
                     ->withPivot('quantity', 'unit', 'note')
                     ->withTimestamps();
     }
 
-    function mealPlanEntries()
-    {
+    function mealPlanEntries() {
         return $this->hasMany(MealPlanEntry::class);
     }
 }

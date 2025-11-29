@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Expense extends Model
-{
+class Expense extends Model {
     protected $fillable = [
         'household_id',
         'amount',
@@ -14,16 +13,14 @@ class Expense extends Model
         'note',
     ];
 
-    protected function casts(): array
-    {
+    protected function casts(): array {
         return [
             'date' => 'date',
             'amount' => 'decimal:2',
         ];
     }
 
-    function household()
-    {
+    function household() {
         return $this->belongsTo(HouseHold::class);
     }
 }

@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MealPlanEntry extends Model
-{
+class MealPlanEntry extends Model {
     protected $fillable = [
         'meal_plan_id',
         'date',
@@ -13,13 +12,11 @@ class MealPlanEntry extends Model
         'recipe_id',
     ];
 
-    function mealPlan()
-    {
+    function mealPlan() {
         return $this->belongsTo(MealPlan::class);
     }
 
-    function recipe()
-    {
+    function recipe() {
         return $this->belongsTo(Recipe::class);
     }
 }

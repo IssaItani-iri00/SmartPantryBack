@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShoppingList extends Model
-{
+class ShoppingList extends Model {
     protected $fillable = [
         'household_id',
         'created_by',
@@ -14,23 +13,19 @@ class ShoppingList extends Model
         'generated_from_meal_plan_id',
     ];
 
-    function household()
-    {
+    function household() {
         return $this->belongsTo(HouseHold::class);
     }
 
-    function creator()
-    {
+    function creator() {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    function items()
-    {
+    function items() {
         return $this->hasMany(ShoppingListItem::class);
     }
 
-    function mealPlan()
-    {
+    function mealPlan() {
         return $this->belongsTo(MealPlan::class, 'generated_from_meal_plan_id');
     }
 }

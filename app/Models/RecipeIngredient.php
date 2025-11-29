@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RecipeIngredient extends Model
-{
+class RecipeIngredient extends Model {
     protected $table = 'recipe_ingredients';
 
     protected $fillable = [
@@ -16,13 +15,11 @@ class RecipeIngredient extends Model
         'note',
     ];
 
-    function recipe()
-    {
+    function recipe() {
         return $this->belongsTo(Recipe::class);
     }
 
-    function ingredient()
-    {
+    function ingredient() {
         return $this->belongsTo(Ingredient::class);
     }
 }

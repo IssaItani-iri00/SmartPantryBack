@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MealPlan extends Model
-{
+class MealPlan extends Model {
     protected $fillable = [
         'household_id',
         'week_start_date',
@@ -14,18 +13,15 @@ class MealPlan extends Model
         'status',
     ];
 
-    function household()
-    {
+    function household() {
         return $this->belongsTo(HouseHold::class);
     }
 
-    function entries()
-    {
+    function entries() {
         return $this->hasMany(MealPlanEntry::class);
     }
 
-    function shoppingLists()
-    {
+    function shoppingLists() {
         return $this->hasMany(ShoppingList::class, "generated_from_meal_plan_id");
     }
 }
