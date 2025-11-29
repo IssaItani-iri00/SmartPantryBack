@@ -3,9 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\User\HouseHoldController;
-use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\HouseHoldController;
+use App\Http\Controllers\UserController;
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
