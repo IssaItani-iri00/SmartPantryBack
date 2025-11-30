@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PantryItem extends Model {
     protected $fillable = [
-        'user_id',
+        'household_id',
+        'added_by',
         'ingredients_id',
         'name',
         'quantity',
@@ -18,6 +19,10 @@ class PantryItem extends Model {
 
     function household() {
         return $this->belongsTo(HouseHold::class);
+    }
+
+    function addedBy() {
+        return $this->belongsTo(User::class, 'added_by');
     }
 
     function ingredient() {

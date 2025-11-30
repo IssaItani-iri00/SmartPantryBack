@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('pantry_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
+            $table->foreignId('household_id')
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->foreignId('added_by')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
             $table->foreignId('ingredients_id')
                 ->nullable()
                 ->constrained()
