@@ -8,6 +8,7 @@ class PantryItem extends Model {
     protected $fillable = [
         'user_id',
         'ingredients_id',
+        'name',
         'quantity',
         'unit',
         'expiry_date',

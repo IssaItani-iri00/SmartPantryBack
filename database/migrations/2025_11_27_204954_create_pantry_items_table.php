@@ -17,8 +17,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->foreignId('ingredients_id')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->string('name')->nullable();
             $table->decimal('quantity', 10, 2)->default(0);
             $table->string('unit', 50)->nullable(); //override deafult_unit if needed
             $table->date('expiry_date')->nullable();
