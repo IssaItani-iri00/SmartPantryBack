@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PantryItemController extends Controller{
-    function index($householdId){
+    function get($householdId){
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
@@ -16,11 +16,11 @@ class PantryItemController extends Controller{
         if (!$belongs)
             return $this->responseJSON(null, "Unauthorized: You do not belong to this household", 403);
 
-        $items = PantryItem::with('ingredient')->where('user_id', $user->id)->get();
+        $items = PantryItem::with('ingredient')->where('household_id', $householdId)->get();
         return $this->responseJSON($items);
     }
 
-    function store(Request $request, $householdId){
+    function create(Request $request, $householdId){
         /** @var \App\Models\User $user */
         $user = Auth::user();
         
@@ -33,7 +33,7 @@ class PantryItemController extends Controller{
             'name' => 'required_without:ingredients_id|string|max:255',
             'quantity' => 'required|numeric|min:0',
             'unit' => 'nullable|string|max:50',
-            'location' => 'nullable|string|in:freezer,fridge,pantry',
+            'location' => 'nullable|string|',
             'expiry_date' => 'nullable|date',
             'notes' => 'nullable|string',
         ]);
@@ -42,7 +42,8 @@ class PantryItemController extends Controller{
             return $this->responseJSON(null, "Either ingredients_id or name is required", 400);
 
         $item = PantryItem::create([
-            'user_id' => $user->id,
+            'household_id' => $householdId,
+            'added_by' => $user->name,
             'ingredients_id' => $request->ingredients_id,
             'name' => $request->name,
             'quantity' => $request->quantity,
@@ -63,7 +64,8 @@ class PantryItemController extends Controller{
         if (!$item)
             return $this->responseJSON(null, "Pantry item not found", 404);
 
-        if ($item->user_id !== $user->id)
+        $belongs = $user->households()->where('household_id', $item->household_id)->exists();
+        if (!$belongs)
             return $this->responseJSON(null, "Unauthorized: You cannot modify this item", 403);
 
         $request->validate([
@@ -79,8 +81,7 @@ class PantryItemController extends Controller{
         $item->update($request->only('ingredients_id', 'name', 'quantity', 'unit', 'location', 'expiry_date', 'notes'));
         return $this->responseJSON($item->load('ingredient'), "Pantry item updated successfully");
     }
-
-    function destroy($id){
+    function delete($id){
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
@@ -88,7 +89,8 @@ class PantryItemController extends Controller{
         if (!$item)
             return $this->responseJSON(null, "Pantry item not found", 404);
 
-        if ($item->user_id !== $user->id)
+        $belongs = $user->households()->where('household_id', $item->household_id)->exists();
+        if (!$belongs)
             return $this->responseJSON(null, "Unauthorized: You cannot delete this item", 403);
 
         $item->delete();

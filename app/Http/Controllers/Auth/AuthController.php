@@ -68,7 +68,6 @@ class AuthController extends Controller {
         $token = Auth::login($user);
         $user->token = $token;
         
-        // Load household relationship
         $user->load('households');
         
         return $this->responseJSON($user);

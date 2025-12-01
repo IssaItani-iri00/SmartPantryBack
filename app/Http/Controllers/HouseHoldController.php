@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 class HouseHoldController extends Controller{
-    function index(){
+    function get(){
         $user = Auth::user();
         $households = $user->households;
         if(!$households)
@@ -18,7 +18,7 @@ class HouseHoldController extends Controller{
         return $this->responseJSON($households);
     }
 
-    function store(Request $request){
+    function create(Request $request){
         /** @var \App\Models\User $user */
         $user = Auth::user();
         $request->validate([
