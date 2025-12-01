@@ -8,20 +8,24 @@ use App\Http\Controllers\HouseHoldController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PantryItemController;
 
+// Authenticated routes
 Route::middleware('auth:api')->group(function () {
+    // User related routes
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user/me', [UserController::class, 'me']);
-    Route::get('/households', [HouseHoldController::class, 'index']);
-    Route::post('/households', [HouseHoldController::class, 'store']);
+
+    // Household related routes
+    Route::get('/households', [HouseHoldController::class, 'get']);
+    Route::post('/households', [HouseHoldController::class, 'create']);
     Route::post('/households/join', [HouseHoldController::class, 'join']);
     
-    // Pantry Item Routes
-    Route::get('/households/{householdId}/pantry', [PantryItemController::class, 'index']);
-    Route::post('/households/{householdId}/pantry', [PantryItemController::class, 'store']);
+    // Pantry item related routes
+    Route::get('/households/{householdId}/pantry', [PantryItemController::class, 'get']);
+    Route::post('/households/{householdId}/pantry', [PantryItemController::class, 'create']);
     Route::put('/pantry/{id}', [PantryItemController::class, 'update']);
-    Route::delete('/pantry/{id}', [PantryItemController::class, 'destroy']);
+    Route::delete('/pantry/{id}', [PantryItemController::class, 'delete']);
 });
 
-
-Route::post('/login', [AuthController::class, 'login']);
+//Unauthenticated routes
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register']);

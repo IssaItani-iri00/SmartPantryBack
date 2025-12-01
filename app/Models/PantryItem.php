@@ -21,10 +21,6 @@ class PantryItem extends Model {
         return $this->belongsTo(HouseHold::class);
     }
 
-    function addedBy() {
-        return $this->belongsTo(User::class, 'added_by');
-    }
-
     function ingredient() {
         return $this->belongsTo(Ingredient::class, 'ingredients_id');
     }
