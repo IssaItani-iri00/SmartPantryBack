@@ -28,8 +28,7 @@ Route::middleware('auth:api')->group(function () {
     
     // Recipe related routes
     Route::get('/households/{householdId}/recipes', [RecipeController::class, 'get']);
-    Route::post('/households/{householdId}/recipes', [RecipeController::class, 'create']);
-    Route::put('/recipes/{id}', [RecipeController::class, 'update']);
+    Route::post('/households/{householdId}/recipes/generate', [RecipeController::class, 'generate']);
     Route::delete('/recipes/{id}', [RecipeController::class, 'delete']);
 });
 
