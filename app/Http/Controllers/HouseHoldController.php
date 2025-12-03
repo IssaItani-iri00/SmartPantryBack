@@ -31,7 +31,7 @@ class HouseHoldController extends Controller{
 
         $user->households()->attach($household->id);
         
-        return $this->responseJSON($user, "Household created successfully", 201);
+        return $this->responseJSON($user->load('households'), "Household created successfully", 201);
     }
 
     function join(Request $request){
