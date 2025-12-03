@@ -53,10 +53,10 @@ class RecipeGeneratorService
                 '  "tags": ["tag1", "tag2"],' . "\n" .
                 '  "prep_time_minutes":,' . "\n" .
                 '  "cook_time_minutes":,' . "\n" .
-                '  "servings": ,' . "\n" .
+                '  "servings": "How Many Servings does this recipe make,' . "\n" .
                 '  "ingredients": [' . "\n" .
-                '    {"name": "ingredient1", "quantity": 2, "unit": "cups", "note": "optional note"},' . "\n" .
-                '    {"name": "ingredient2", "quantity": 1, "unit": "tbsp"}' . "\n" .
+                '    {"name": "ingredient1", "quantity": number, "unit": "kg/g/litres/cups", "note": "optional note"},' . "\n" .
+                '    {"name": "ingredient2", "quantity": number, "unit": "kg/g/litres/cups"}' . "\n" .
                 '  ]' . "\n" .
                 "}\n\n" .
                 "Important guidelines:\n" .
