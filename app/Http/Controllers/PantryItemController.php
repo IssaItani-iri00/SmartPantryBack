@@ -67,7 +67,7 @@ class PantryItemController extends Controller{
             'name' => 'nullable|string|max:255',
             'quantity' => 'sometimes|numeric|min:0',
             'unit' => 'nullable|string|max:50',
-            'location' => 'nullable|string|in:freezer,fridge,pantry',
+            'location' => 'nullable|string',
             'expiry_date' => 'nullable|date',
             'notes' => 'nullable|string',
         ]);
