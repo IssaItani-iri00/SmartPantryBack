@@ -30,10 +30,10 @@ class HouseHold extends Model {
     }
 
     function pantryItems() {
-        return $this->hasMany(Recipe::class);
+        return $this->hasMany(PantryItem::class);
     }
 
-    function meanlPlans() {
+    function mealPlans() {
         return $this->hasMany(MealPlan::class);
     }
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Household;
+use App\Models\HouseHold;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -49,13 +49,13 @@ class AuthController extends Controller {
         $user->save();
 
         if ($request->household_action === 'create') {
-            $household = new Household;
+            $household = new HouseHold;
             $household->name = $request->household_name;
             $household->save();
             
             $user->households()->attach($household->id);
         } else {
-            $household = Household::where('invite_code', $request->household_code)->first();
+            $household = HouseHold::where('invite_code', $request->household_code)->first();
             
             if (!$household) {
                 $user->delete();
