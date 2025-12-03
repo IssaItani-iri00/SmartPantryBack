@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShoppingListItem extends Model {
     protected $fillable = [
         'shopping_list_id',
-        'ingredient_id',
+        'pantry_item_id',
         'name',
         'quantity',
         'unit',
@@ -19,7 +19,7 @@ class ShoppingListItem extends Model {
         return $this->belongsTo(ShoppingList::class);
     }
 
-    function ingredient() {
-        return $this->belongsTo(Ingredient::class);
+    function pantryItem() {
+        return $this->belongsTo(PantryItem::class);
     }
 }

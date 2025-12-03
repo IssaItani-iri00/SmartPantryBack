@@ -16,7 +16,7 @@ class PantryItemController extends Controller{
         if (!$belongs)
             return $this->responseJSON(null, "Unauthorized: You do not belong to this household", 403);
 
-        $items = PantryItem::with('ingredient')->where('household_id', $householdId)->get();
+        $items = PantryItem::where('household_id', $householdId)->get();
         return $this->responseJSON($items);
     }
 
@@ -29,8 +29,7 @@ class PantryItemController extends Controller{
             return $this->responseJSON(null, "Unauthorized: You do not belong to this household", 403);
 
         $request->validate([
-            'ingredients_id' => 'nullable|exists:ingredients,id',
-            'name' => 'required_without:ingredients_id|string|max:255',
+            'name' => 'required|string|max:255',
             'quantity' => 'required|numeric|min:0',
             'unit' => 'nullable|string|max:50',
             'location' => 'nullable|string|',
@@ -38,13 +37,9 @@ class PantryItemController extends Controller{
             'notes' => 'nullable|string',
         ]);
 
-        if (!$request->ingredients_id && !$request->name)
-            return $this->responseJSON(null, "Either ingredients_id or name is required", 400);
-
         $item = PantryItem::create([
             'household_id' => $householdId,
             'added_by' => $user->name,
-            'ingredients_id' => $request->ingredients_id,
             'name' => $request->name,
             'quantity' => $request->quantity,
             'unit' => $request->unit,
@@ -69,7 +64,6 @@ class PantryItemController extends Controller{
             return $this->responseJSON(null, "Unauthorized: You cannot modify this item", 403);
 
         $request->validate([
-            'ingredients_id' => 'nullable|exists:ingredients,id',
             'name' => 'nullable|string|max:255',
             'quantity' => 'sometimes|numeric|min:0',
             'unit' => 'nullable|string|max:50',
@@ -78,8 +72,8 @@ class PantryItemController extends Controller{
             'notes' => 'nullable|string',
         ]);
 
-        $item->update($request->only('ingredients_id', 'name', 'quantity', 'unit', 'location', 'expiry_date', 'notes'));
-        return $this->responseJSON($item->load('ingredient'), "Pantry item updated successfully");
+        $item->update($request->only('name', 'quantity', 'unit', 'location', 'expiry_date', 'notes'));
+        return $this->responseJSON($item, "Pantry item updated successfully");
     }
     function delete($id){
         /** @var \App\Models\User $user */

@@ -17,7 +17,7 @@ class RecipeController extends Controller
         if (!$belongs)
             return $this->responseJSON(null, "Unauthorized: You do not belong to this household", 403);
         
-        $recipes = Recipe::with('ingredients', 'user')->where('household_id', $householdId)->get();
+        $recipes = Recipe::with('pantryItems', 'user')->where('household_id', $householdId)->get();
         return $this->responseJSON($recipes);
     }
 
@@ -36,11 +36,11 @@ class RecipeController extends Controller
             'prep_time_minutes' => 'nullable|integer|min:0',
             'cook_time_minutes' => 'nullable|integer|min:0',
             'servings' => 'nullable|integer|min:1',
-            'ingredients' => 'nullable|array',
-            'ingredients.*.ingredient_id' => 'required_with:ingredients|exists:ingredients,id',
-            'ingredients.*.quantity' => 'required_with:ingredients|numeric|min:0',
-            'ingredients.*.unit' => 'nullable|string|max:50',
-            'ingredients.*.note' => 'nullable|string',
+            'pantry_items' => 'nullable|array',
+            'pantry_items.*.pantry_item_id' => 'required_with:pantry_items|exists:pantry_items,id',
+            'pantry_items.*.quantity' => 'required_with:pantry_items|numeric|min:0',
+            'pantry_items.*.unit' => 'nullable|string|max:50',
+            'pantry_items.*.note' => 'nullable|string',
         ]);
 
         $recipe = Recipe::create([
@@ -54,17 +54,17 @@ class RecipeController extends Controller
             'servings' => $request->servings,
         ]);
 
-        if ($request->has('ingredients')) {
-            foreach ($request->ingredients as $ingredient) {
-                $recipe->ingredients()->attach($ingredient['ingredient_id'], [
-                    'quantity' => $ingredient['quantity'],
-                    'unit' => $ingredient['unit'] ?? null,
-                    'note' => $ingredient['note'] ?? null,
+        if ($request->has('pantry_items')) {
+            foreach ($request->pantry_items as $pantryItem) {
+                $recipe->pantryItems()->attach($pantryItem['pantry_item_id'], [
+                    'quantity' => $pantryItem['quantity'],
+                    'unit' => $pantryItem['unit'] ?? null,
+                    'note' => $pantryItem['note'] ?? null,
                 ]);
             }
         }
 
-        return $this->responseJSON($recipe->load('ingredients', 'user'), "Recipe created successfully", 201);
+        return $this->responseJSON($recipe->load('pantryItems', 'user'), "Recipe created successfully", 201);
     }
 
     function update(Request $request, $id){
@@ -86,27 +86,27 @@ class RecipeController extends Controller
             'prep_time_minutes' => 'nullable|integer|min:0',
             'cook_time_minutes' => 'nullable|integer|min:0',
             'servings' => 'nullable|integer|min:1',
-            'ingredients' => 'nullable|array',
-            'ingredients.*.ingredient_id' => 'required_with:ingredients|exists:ingredients,id',
-            'ingredients.*.quantity' => 'required_with:ingredients|numeric|min:0',
-            'ingredients.*.unit' => 'nullable|string|max:50',
-            'ingredients.*.note' => 'nullable|string',
+            'pantry_items' => 'nullable|array',
+            'pantry_items.*.pantry_item_id' => 'required_with:pantry_items|exists:pantry_items,id',
+            'pantry_items.*.quantity' => 'required_with:pantry_items|numeric|min:0',
+            'pantry_items.*.unit' => 'nullable|string|max:50',
+            'pantry_items.*.note' => 'nullable|string',
         ]);
 
         $recipe->update($request->only('title', 'instructions', 'tags', 'prep_time_minutes', 'cook_time_minutes', 'servings'));
 
-        if ($request->has('ingredients')) {
-            $recipe->ingredients()->detach();
-            foreach ($request->ingredients as $ingredient) {
-                $recipe->ingredients()->attach($ingredient['ingredient_id'], [
-                    'quantity' => $ingredient['quantity'],
-                    'unit' => $ingredient['unit'] ?? null,
-                    'note' => $ingredient['note'] ?? null,
+        if ($request->has('pantry_items')) {
+            $recipe->pantryItems()->detach();
+            foreach ($request->pantry_items as $pantryItem) {
+                $recipe->pantryItems()->attach($pantryItem['pantry_item_id'], [
+                    'quantity' => $pantryItem['quantity'],
+                    'unit' => $pantryItem['unit'] ?? null,
+                    'note' => $pantryItem['note'] ?? null,
                 ]);
             }
         }
 
-        return $this->responseJSON($recipe->load('ingredients', 'user'), "Recipe updated successfully");
+        return $this->responseJSON($recipe->load('pantryItems', 'user'), "Recipe updated successfully");
     }
 
     function delete($id){

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('shopping_list_id')
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->foreignId('ingredient_id')
+            $table->foreignId('pantry_item_id')
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();

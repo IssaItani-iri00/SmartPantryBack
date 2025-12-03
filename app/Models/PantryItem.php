@@ -8,7 +8,6 @@ class PantryItem extends Model {
     protected $fillable = [
         'household_id',
         'added_by',
-        'ingredients_id',
         'name',
         'quantity',
         'unit',
@@ -21,7 +20,13 @@ class PantryItem extends Model {
         return $this->belongsTo(HouseHold::class);
     }
 
-    function ingredient() {
-        return $this->belongsTo(Ingredient::class, 'ingredients_id');
+    function recipes() {
+        return $this->belongsToMany(Recipe::class, 'recipe_pantry_items')
+                    ->withPivot('quantity', 'unit', 'note')
+                    ->withTimestamps();
+    }
+
+    function shoppingListItems() {
+        return $this->hasMany(ShoppingListItem::class);
     }
 }

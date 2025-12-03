@@ -8,7 +8,6 @@ use App\Http\Controllers\HouseHoldController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PantryItemController;
 use App\Http\Controllers\RecipeController;
-use App\Http\Controllers\IngredientController;
 
 // Authenticated routes
 Route::middleware('auth:api')->group(function () {
@@ -32,12 +31,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/households/{householdId}/recipes', [RecipeController::class, 'create']);
     Route::put('/recipes/{id}', [RecipeController::class, 'update']);
     Route::delete('/recipes/{id}', [RecipeController::class, 'delete']);
-    
-    // Ingredient related routes
-    Route::get('/households/{householdId}/ingredients', [IngredientController::class, 'get']);
-    Route::post('/households/{householdId}/ingredients', [IngredientController::class, 'create']);
-    Route::put('/ingredients/{id}', [IngredientController::class, 'update']);
-    Route::delete('/ingredients/{id}', [IngredientController::class, 'delete']);
 });
 
 //Unauthenticated routes
