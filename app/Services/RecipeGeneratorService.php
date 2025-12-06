@@ -54,6 +54,10 @@ class RecipeGeneratorService
                 '  "prep_time_minutes":,' . "\n" .
                 '  "cook_time_minutes":,' . "\n" .
                 '  "servings": "How Many Servings does this recipe make,' . "\n" .
+                '  "ingredients": [' . "\n" .
+                '    {"name": "ingredient1", "quantity": number, "unit": "kg/g/litres/cups", "note": "optional note"},' . "\n" .
+                '    {"name": "ingredient2", "quantity": number, "unit": "kg/g/litres/cups"}' . "\n" .
+                '  ]' . "\n" .
                 "}\n\n" .
                 "Important guidelines:\n" .
                 "- Use ingredients from the available pantry items whenever possible\n" .
