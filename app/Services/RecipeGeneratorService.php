@@ -90,10 +90,6 @@ class RecipeGeneratorService
             $recipeData = json_decode($content, true);
 
             if (json_last_error() !== JSON_ERROR_NONE) {
-                Log::error('Failed to parse OpenAI response', [
-                    'error' => json_last_error_msg(),
-                    'response' => $content
-                ]);
                 throw new \Exception("Failed to generate recipe. Please try again.");
             }
 
