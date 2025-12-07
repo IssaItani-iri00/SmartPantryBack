@@ -75,6 +75,7 @@ class PantryItemController extends Controller{
         $item->update($request->only('name', 'quantity', 'unit', 'location', 'expiry_date', 'notes'));
         return $this->responseJSON($item, "Pantry item updated successfully");
     }
+    
     function delete($id){
         /** @var \App\Models\User $user */
         $user = Auth::user();

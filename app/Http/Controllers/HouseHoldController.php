@@ -13,7 +13,7 @@ class HouseHoldController extends Controller{
         $user = Auth::user();
         $households = $user->households;
         if(!$households)
-            return $this->responseJSON("No households found", 400);
+            return $this->responseJSON(null, "No households found", 400);
         
         return $this->responseJSON($households);
     }
