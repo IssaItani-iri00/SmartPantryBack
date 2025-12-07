@@ -103,7 +103,6 @@ class RecipeGeneratorService
             return $recipeData;
 
         } catch (\Exception $e) {
-            Log::error('OpenAI API error', ['message' => $e->getMessage()]);
             throw new \Exception("Failed to generate recipe: " . $e->getMessage());
         }
     }
