@@ -65,7 +65,7 @@ class PantryItemController extends Controller{
 
         $request->validate([
             'name' => 'nullable|string|max:255',
-            'quantity' => 'sometimes|numeric|min:0',
+            'quantity' => 'nullable|numeric|min:0',
             'unit' => 'nullable|string|max:50',
             'location' => 'nullable|string',
             'expiry_date' => 'nullable|date',
@@ -75,7 +75,7 @@ class PantryItemController extends Controller{
         $item->update($request->only('name', 'quantity', 'unit', 'location', 'expiry_date', 'notes'));
         return $this->responseJSON($item, "Pantry item updated successfully");
     }
-    
+
     function delete($id){
         /** @var \App\Models\User $user */
         $user = Auth::user();
